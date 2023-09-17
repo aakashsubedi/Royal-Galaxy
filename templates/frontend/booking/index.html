@@ -165,22 +165,30 @@
 </script>
 <!-- //Calendar -->
 
-{#<script>#}
-{##}
-{#    function hotelBook() {#}
-{#        Swal.fire({#}
-{#            position: 'top-end',#}
-{#            icon: 'success',#}
-{#            title: 'Your room successfully booked.',#}
-{#            showConfirmButton: false,#}
-{#            timer: 1500#}
-{#        })#}
-{#        setTimeout(function () {#}
-{#            location.reload();#}
-{#        }, 1500);#}
-{##}
-{#    }#}
-{#</script>#}
+<script>
+     {% if messages %}
+        {% for message in messages %}
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: '{{ message }}'
+            })
+        {% endfor %}
+
+    {% endif %}
+
+</script>
 
 <script>
     $(document).ready(function () {

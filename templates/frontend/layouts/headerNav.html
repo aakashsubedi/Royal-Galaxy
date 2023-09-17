@@ -2,7 +2,8 @@
 <nav>
             <div class="row">
 {#                <img src="{% static 'images/Logo.png' %}" class="logo">#}
-                <img src="{% static 'images/logo/img.png' %}" class="logo">
+                <a href="{% url 'home' %}"><img src="{% static 'images/logo/img.png' %}" class="logo"></a>
+
                 <ul class="main-nav" id="check-class">
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'aboutUs' %}">About Us</a></li>

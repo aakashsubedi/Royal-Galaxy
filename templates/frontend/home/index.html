@@ -92,6 +92,16 @@
             .card-title {
                 font-size: 1.5rem;
                 font-weight: bold;
+                overflow: hidden;
+            }
+
+            .left {
+                float: left;
+            }
+
+            .right {
+                float: right;
+                color: #40D3DC;
             }
 
             .card-price {
@@ -133,7 +143,11 @@
                 <div class="card">
                     <img src="{{ room.image.url }}" alt="Hotel Room">
                     <div class="card-content">
-                        <div class="card-title">{{ room.title|title }}</div>
+                        <div class="card-title">
+                            <span class="left">{{ room.title|title }}</span>
+                            <span class="right">{{ room.type|title }}</span>
+                        </div>
+
                         <div class="card-price">Rs. {{ room.price }}</div>
                         <hr>
                         <p class="card-description" style="text-align: justify;">{{ room.text }}</p>
