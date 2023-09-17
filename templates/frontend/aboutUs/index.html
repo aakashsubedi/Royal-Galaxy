@@ -1,0 +1,33 @@
+{% load static %}
+
+<html>
+<head>
+    <title>
+
+    </title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Flamenco" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    {% include 'frontend/layouts/headerNav.html' %}
+</header>
+
+
+<section class="heading">
+    <video autoplay loop class="video-background" muted plays-inline>
+        <source src="{% static 'images/video.mp4' %}" type="video/mp4">
+    </video>
+
+    <div class="welcome-msg">
+        {% for about in object_list %}
+        <h1 style="font-size: 40px; font-weight: bold;"> {{ about.title|title }} </h1>
+        <p>
+            {{ about.about }}
+        </p>
+        {% endfor %}
+    </div>
+</section>
+</body>
+</html>

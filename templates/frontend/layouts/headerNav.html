@@ -1,0 +1,14 @@
+{% load static %}
+<nav>
+            <div class="row">
+{#                <img src="{% static 'images/Logo.png' %}" class="logo">#}
+                <img src="{% static 'images/logo/img.png' %}" class="logo">
+                <ul class="main-nav" id="check-class">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'aboutUs' %}">About Us</a></li>
+                    <li><a href="{% url 'booking' %}">Book Your Room</a></li>
+
+                </ul>
+                <!-- <a href="#" class="mobile-icon" onclick="slideshow()"> <i class="fa fa-bars"></i></a>	 -->
+            </div>
+        </nav>

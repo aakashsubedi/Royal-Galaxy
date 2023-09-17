@@ -1,0 +1,254 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Hotel Booking</title>
+
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- //font-awesome-icons -->
+    <!-- Stylesheet -->
+    <link href="{% static 'css/book.css' %}" rel='stylesheet' type='text/css'/>
+    <!-- //Stylesheet -->
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Flamenco" rel="stylesheet">
+
+    <!-- jQuery library -->
+    {#    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>#}
+
+    <!-- jQuery UI library -->
+    {#    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">#}
+    {#    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+
+
+    <!-- // fonts-->
+
+    <style>
+        body {
+            background: url({% static 'images/background1.jpg' %}) no-repeat center top;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    {% include 'frontend/layouts/headerNav.html' %}
+</header>
+<!--background-->
+<h1 style="font-weight: bold; color: #111313"> <u>Resort Booking Form</u></h1>
+
+
+<div class="bg-agile">
+    <div class="book-appointment">
+        <h2>Book Now</h2>
+        <div class="book-form agileits-login">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="agileits_reservation_grid">
+                    {% for field in form.visible_fields|slice:'4' %}
+                        <div class="phone_email {% if forloop.counter|divisibleby:2 %} phone_email1 {% endif %}">
+                            <div class="form-text">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <input type="{{ field.field.widget.input_type }}"
+                                       name="{{ field.html_name }}"
+                                       value="{{ field.value|default_if_none:'' }}"
+                                       placeholder="{{ field.label }}"
+                                       class="form-control" required>
+                                {% if field.errors %}
+                                    <strong style="color: #ea2e3e" role="alert">
+                                        {{ field.errors|striptags }}</strong>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                    <div class="span1_of_1 phone_email1">
+                        <div class="book_date">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <input id="datepicker" name="arrival_date" type="text" placeholder="Arrival Date"
+                                   onfocus="this.value = '';"
+                                    value="{% if form.arrival_date.value %}{{ form.arrival_date.value }}{% else %}mm/dd/yyyy{% endif %}"
+                                   onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}"
+                                   required="">
+                            {% if form.errors.arrival_date %}
+                                <strong style="color: #ea2e3e" role="alert">
+                                    {{ form.errors.arrival_date|striptags }}</strong>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="span1_of_1 phone_email">
+                        <div class="book_date">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <input id="datepicker1" name="booking_date" type="text"
+                                   placeholder="Departure Date"
+                                   value="{% if form.booking_date.value %}{{ form.booking_date.value }}{% else %}mm/dd/yyyy{% endif %}"
+                                   onfocus="this.value = '';"
+                                   onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}"
+                                   required="">
+                            {% if form.errors.booking_date %}
+                                <strong style="color: #ea2e3e" role="alert">
+                                    {{ form.errors.booking_date|striptags }}</strong>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="span1_of_1">
+                        <!-- start_section_room -->
+                        <div class="section_room">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <select id="country" name="no_of_people" class="frm-field required" required>
+                                <option value="">No.of guests</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                            {% if form.errors.no_of_people %}
+                                <strong style="color: #ea2e3e" role="alert">
+                                    {{ form.errors.no_of_people|striptags }}</strong>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="span1_of_1 phone_email1">
+                        <!-- start_section_room -->
+                        <div class="section_room">
+                            <i class="fa fa-h-square" aria-hidden="true"></i>
+                            {{ form.type }}
+                            {% if form.errors.type %}
+                                <strong style="color: #ea2e3e" role="alert">
+                                    {{ form.errors.type|striptags }}</strong>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="span1_of_1">
+                        <!-- start_section_room -->
+                        <div class="section_room">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <select id="country" class="room_name" name="room" required>
+                                <option>Select Rooms</option>
+                            </select>
+                            {% if form.errors.room %}
+                                <strong style="color: #ea2e3e" role="alert">
+                                    {{ form.errors.room|striptags }}</strong>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="phone_email phone_email1">
+                        <div class="form-text">
+                            <i class="fa fa-dollar" aria-hidden="true"></i>
+                            <input type="text" name="price" placeholder="Price" id="price" required="" autocomplete="off">
+                        </div>
+                    </div>
+                    <input type="submit" value="Book Now">
+                    <input type="reset" value="Reset">
+                    <div class="clear"></div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="{% static 'jsBook/jquery-2.1.4.min.js' %}"></script>
+<!--Calendar -->
+<link rel="stylesheet" href="{% static 'jsBook/jquery-ui.css' %}"/>
+<script src="{% static 'jsBook/jquery-ui.js' %}"></script>
+<script>
+    $(function () {
+        $("#datepicker,#datepicker1,#datepicker2").datepicker();
+    });
+</script>
+<!-- //Calendar -->
+
+{#<script>#}
+{##}
+{#    function hotelBook() {#}
+{#        Swal.fire({#}
+{#            position: 'top-end',#}
+{#            icon: 'success',#}
+{#            title: 'Your room successfully booked.',#}
+{#            showConfirmButton: false,#}
+{#            timer: 1500#}
+{#        })#}
+{#        setTimeout(function () {#}
+{#            location.reload();#}
+{#        }, 1500);#}
+{##}
+{#    }#}
+{#</script>#}
+
+<script>
+    $(document).ready(function () {
+        // Get references to the select fields
+        var roomTypeSelect = $('#country1');
+        var roomNameSelect = $('.room_name');
+
+        // Function to fetch room names based on room type
+        function fetchRoomNames(roomTypeId) {
+            $.ajax({
+                url: '/get_room_names/', // Replace with your AJAX endpoint URL
+                data: {
+                    room_type_id: roomTypeId
+                },
+                dataType: 'json',
+                success: function (data) {
+                    {#console.log(data)#}
+                    roomNameSelect.empty();
+                    $('#price').val('');
+                    roomNameSelect.append($('<option>', {
+                        value: null,
+                        text: 'Select Room'
+                    }));
+                    if (data.room_names.length > 0) {
+                        $.each(data.room_names, function (index, roomName) {
+                            roomNameSelect.append($('<option>', {
+                                value: roomName[0],
+                                text: roomName[1]
+                            }));
+                        });
+                    } else {
+                        roomNameSelect.append($('<option>', {
+                            value: '',
+                            text: 'No rooms available'
+                        }));
+                    }
+                }
+            });
+        }
+
+        // Initial fetch based on selected room type
+        fetchRoomNames(roomTypeSelect.val());
+
+        // Handle change event of room type select
+        roomTypeSelect.on('change', function () {
+            fetchRoomNames($(this).val());
+        });
+    });
+</script>
+
+<script>
+    function fetchRoomPrice(room_name) {
+        $.ajax({
+            url: '/get_room_prices/', // Replace with your AJAX endpoint URL
+            data: {
+                room_name: room_name
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#price').val('Rs. ' + data.room_prices);
+            }
+        });
+    }
+
+    $('.room_name').on('change', function () {
+        fetchRoomPrice($(this).val());
+    });
+</script>
+
+</body>
+</html>

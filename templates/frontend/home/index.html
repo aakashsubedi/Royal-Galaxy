@@ -1,0 +1,155 @@
+{% extends 'frontend/layouts/master.html' %}
+{% load static %}
+
+{% block header %}
+    <header>
+
+        {% include 'frontend/layouts/headerNav.html' %}
+
+        <div class="main-content-header">
+            <div class="slider">
+                <!--image slider start-->
+                <div class="slides">
+                    <!--radio slider start-->
+                    <input type="radio" name="radio-btn" id="radio1">
+                    <input type="radio" name="radio-btn" id="radio2">
+                    <input type="radio" name="radio-btn" id="radio3">
+                    <input type="radio" name="radio-btn" id="radio4">
+                    <input type="radio" name="radio-btn" id="radio5">
+
+                    <!--radio slider end-->
+                    <!--slides images start-->
+
+                    {% for banner in banners %}
+
+                        <div class="slide {% if forloop.counter == 1 %} first {% endif %}">
+                            <img src="{{ banner.image.url }}" alt="">
+                        </div>
+
+                    {% endfor %}
+                    <!--manual navigation start-->
+                    <div class="navigation-auto">
+                        <label for="radio1" class="manual-btn"></label>
+                        <label for="radio2" class="manual-btn"></label>
+                        <label for="radio3" class="manual-btn"></label>
+                        <label for="radio4" class="manual-btn"></label>
+                        <label for="radio5" class="manual-btn"></label>
+                    </div>
+                    <!--manual navigation end-->
+                </div>
+            </div>
+
+        </div>
+        <!--image slider end-->
+        <script type="text/javascript">
+            var counter = 2;
+            setInterval(function () {
+                document.getElementById('radio' + counter).checked = true;
+                counter++;
+                if (counter > 5) {
+                    counter = 1;
+                }
+            }, 5000);
+        </script>
+
+    </header>
+{% endblock %}
+
+{% block content %}
+
+    <h2 style="text-align: center; margin-top: 15px; margin-bottom: 15px; font-weight: bold; font-size: 40px"><u> Our
+        Top Rooms </u></h2>
+    <section class="about">
+
+
+        <style>
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .card {
+                width: calc(33.33% - 10px); /* 33.33% width for each card with some spacing */
+                margin-bottom: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+                border: 2px solid #007BFF; /* Border color added */
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .card img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+
+            .card-price {
+                font-size: 1.25rem;
+                color: #333;
+                margin-top: 10px;
+            }
+
+            .card-description {
+                margin-top: 10px;
+                color: #666;
+            }
+
+            .card-location {
+                margin-top: 10px;
+                font-size: 0.875rem;
+                color: #888;
+            }
+
+            .card-buttons {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .view-stats-button {
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                padding: 8px 16px;
+                cursor: pointer;
+            }
+        </style>
+
+
+        <div class="container">
+            {% for room in rooms %}
+                <div class="card">
+                    <img src="{{ room.image.url }}" alt="Hotel Room">
+                    <div class="card-content">
+                        <div class="card-title">{{ room.title|title }}</div>
+                        <div class="card-price">Rs. {{ room.price }}</div>
+                        <hr>
+                        <p class="card-description" style="text-align: justify;">{{ room.text }}</p>
+                        {#                <p class="card-description" style="text-align: justify;">{{ room.text|slice:':230' }}{% if room.text|length > 200 %}...{% endif %}</p>#}
+                        <div class="card-location">Posted {{ room.created_at|timesince }} ago</div>
+                        <div class="card-buttons">
+                            <button class="view-stats-button">Book Room</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </section>
+
+
+
+
+{% endblock %}
