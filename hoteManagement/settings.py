@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # 'apps.frontend.aboutUs',
     # 'apps.frontend.booking',
     'apps.frontend.home',
+    'apps.backend.feedback'
 
 ]
 

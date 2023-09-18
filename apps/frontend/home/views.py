@@ -8,7 +8,8 @@ from apps.backend.aboutUs.models import aboutUs
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.http import JsonResponse
-from .forms import BookingForm
+from .forms import BookingForm, FeedbackForm
+from ...backend.feedback.models import Feedback
 
 
 # Create your views here.
@@ -48,6 +49,33 @@ class BookingView(SuccessMessageMixin, CreateView):
     form_class = BookingForm
     success_message = "Room Successfully Booked."
     success_url = reverse_lazy('booking')
+
+
+class FeedbackView(SuccessMessageMixin, CreateView):
+    model = Feedback
+    template_name = "frontend/feedback/index.html"
+    form_class = FeedbackForm
+    success_message = "Thank you for your valuable feedback."
+    success_url = reverse_lazy('feedback')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['banners'] = Banner.objects.all()
+        context['rooms'] = Room.objects.filter(status=True).order_by('position')
+        context['footerName'] = Footer.objects.filter(title='name').first()
+        context['footerNumber'] = Footer.objects.filter(title='contact').first()
+        context['footerEmail'] = Footer.objects.filter(title='email').first()
+        context['footerCopyright'] = Footer.objects.filter(title='copyright').first()
+
+        if context['footerName'] is None:
+            context['footerName'] = "Hotel Name"
+        if context['footerNumber'] is None:
+            context['footerNumber'] = "9869286303"
+        if context['footerEmail'] is None:
+            context['footerEmail'] = "aakkashsubedi@gmail.com"
+        if context['footerCopyright'] is None:
+            context['footerCopyright'] = "Akash's Hotel"
+        return context
 
 
 def get_room_names(request):

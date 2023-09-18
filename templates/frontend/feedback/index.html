@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Hotel Booking</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'css/book.css' %}" rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/css?family=Flamenco" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    {% include 'frontend/layouts/headerNav.html' %}
+</header>
+<!--background-->
+<h1 style="font-weight: bold; color: #111313"><u>Feedback Form</u></h1>
+
+
+<style>
+    /* styles.css */
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
+
+    .error-msg {
+        color: #ea2e3e;
+        font-weight: bold;
+    }
+
+</style>
+
+<div class="form-container">
+    <form method="post" class="my-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="form-label">
+                <i class="fa fa-user" aria-hidden="true"></i> {{ form.title.label }}
+            </label>
+            <input type="{{ form.title.field.widget.input_type }}"
+                   name="{{ form.title.html_name }}"
+                   id="{{ form.title.id_for_label }}"
+                   value="{{ form.title.value|default_if_none:'' }}"
+                   placeholder="{{ form.title.label }}"
+                   class="form-control" required>
+            {% if form.title.errors %}
+                <div class="error-msg">
+                    {{ form.title.errors|striptags }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.text.id_for_label }}" class="form-label">
+                <i class="fa fa-comment" aria-hidden="true"></i> {{ form.text.label }}
+            </label>
+            {{ form.text }}
+            {% if form.text.errors %}
+                <div class="error-msg">
+                    {{ form.text.errors|striptags }}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: '{{ message }}'
+            })
+        {% endfor %}
+    {% endif %}
+</script>
+</body>
+</html>

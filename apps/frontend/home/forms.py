@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from apps.backend.booking.models import Booking
+from apps.backend.feedback.models import Feedback
 from apps.backend.room.models import RoomType
 
 
@@ -20,4 +21,17 @@ class BookingForm(ModelForm):
             'no_of_people',
             'type',
             'room',
+        ]
+
+class FeedbackForm(ModelForm):
+    text = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        # other form field properties
+    )
+    class Meta:
+        model = Feedback
+        fields = [
+            'title',
+            'text',
+          
         ]
